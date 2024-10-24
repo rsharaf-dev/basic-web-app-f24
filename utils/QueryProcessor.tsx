@@ -18,5 +18,20 @@ export default function QueryProcessor(query: string): string {
     //TODO update the corresponding test case in __tests__
     return ( "rsharaf-313" );
   }
+
+  const arithmeticMatch = query.toLowerCase().match(/what is (\d+) plus (\d+)\?/);
+  if (arithmeticMatch) {
+    const num1 = parseInt(arithmeticMatch[1]);
+    const num2 = parseInt(arithmeticMatch[2]);
+    return (num1 + num2).toString();
+  }
+
+  // Check for comparison queries (e.g., "Which of the following numbers is the largest: 2, 15, 80?")
+  const largestNumberMatch = query.toLowerCase().match(/which of the following numbers is the largest: (.*)\?/);
+  if (largestNumberMatch) {
+    const numbers = largestNumberMatch[1].split(',').map(num => parseInt(num.trim()));
+    const largestNumber = Math.max(...numbers);
+    return largestNumber.toString();
+  }
   return "";
 }
